@@ -1,4 +1,92 @@
-# KIIT-SSS-API-serverless
+# KIIT SSS API
+
+An API that scrapes KIIT SAP Student Self Service portal. Uses Serverless Application Model. Each resource uses a separate lambda function, and shared code is hosted on a lambda layer.
+
+Live @ https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1
+
+# Usage
+
+## Get login cookie: [/cookie](https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/cookie)
+
+### Query parameters
+
+| Name     | Type    |
+| -------- | ------- |
+| username | Integer |
+| password | String  |
+
+### Example: Request
+
+```
+curl -X POST -H 'Content-Type: application/json' -d '{"username": xxxxxxx,"password":"YourPassword"}' https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/cookie
+```
+
+### Example: Response
+
+```
+{
+  "cookie": "MYSAPSSO2=cookievalue"
+}
+```
+
+## Get student info: [/info](https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/info)
+
+### Query parameters
+
+| Name   | Type   |
+| ------ | ------ |
+| cookie | String |
+
+### Example: Request
+
+```
+curl -X POST -H 'Content-Type: application/json' -d '{"cookie": "MYSAPSSO2=cookievalue"}' https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/info
+```
+
+### Example: Response
+
+```
+{
+  "school": "SCSE",
+  "rollNo": "xxxxxxx",
+  "name": "Your Name",
+  "regNo": "xxxxxxxxxx",
+  "program": "B.Tech.(Computer Science Engineering)",
+  "semester": "4th Stage",
+  "userImage": "http://link/to/your/pic.jpg"
+}
+```
+
+## Get attendance details: [/attendance](https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/attendance)
+
+### Query parameters
+
+| Name    | Type                          |
+| ------- | ----------------------------- |
+| cookie  | String                        |
+| year    | Integer                       |
+| session | String (`Spring` or `Autumn`) |
+
+### Example: Request
+
+```
+curl -X POST -H 'Content-Type: application/json' -d '{"cookie": "MYSAPSSO2=cookievalue", "year": 2022, "session": "Spring"}' https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/attendance
+```
+
+### Example: Response
+
+```
+{
+  "subject": [ "Subject1", ... ],
+  "presentCount": [ "37.00", ... ],
+  "absentCount": [ "3.00", ... ],
+  "dayCount": [ "40.00", ... ],
+  "presentPercent": [ "92.50", ... ],
+  "faculty": [ "Teacher1", ... ]
+}
+```
+
+<!-- # KIIT-SSS-API-serverless
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
 
@@ -9,7 +97,7 @@ This project contains source code and supporting files for a serverless applicat
 
 The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
 
-If you prefer to use an integrated development environment (IDE) to build and test your application, you can use the AWS Toolkit.  
+If you prefer to use an integrated development environment (IDE) to build and test your application, you can use the AWS Toolkit.
 The AWS Toolkit is an open source plug-in for popular IDEs that uses the SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds a simplified step-through debugging experience for Lambda function code. See the following links to get started.
 
 - [CLion](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
@@ -125,4 +213,4 @@ sam delete --stack-name KIIT-SSS-API-serverless
 
 See the [AWS SAM developer guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html) for an introduction to SAM specification, the SAM CLI, and serverless application concepts.
 
-Next, you can use AWS Serverless Application Repository to deploy ready to use Apps that go beyond hello world samples and learn how authors developed their applications: [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/)
+Next, you can use AWS Serverless Application Repository to deploy ready to use Apps that go beyond hello world samples and learn how authors developed their applications: [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/) -->
